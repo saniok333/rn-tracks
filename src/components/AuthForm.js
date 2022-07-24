@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import { Input, Text, Button } from 'react-native-elements';
 import Spacer from './Spacer';
 import NavLink from './NavLink';
@@ -14,6 +15,7 @@ const AuthForm = ({
 }) => {
   const {
     state: { errorMessage },
+    clearErrorMessage,
   } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
@@ -21,6 +23,7 @@ const AuthForm = ({
 
   return (
     <View style={styles.container}>
+      <NavigationEvents onWillFocus={clearErrorMessage} />
       <Spacer>
         <Text h3>{title}</Text>
       </Spacer>
