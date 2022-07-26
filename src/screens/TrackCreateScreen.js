@@ -9,8 +9,13 @@ import { useContext } from 'react';
 import { Context as LocationContext } from '../context/LocationContext';
 
 const TrackCreateScreen = ({ isFocused }) => {
-  const { addLocation } = useContext(LocationContext);
-  const [err] = useLocation(isFocused, addLocation);
+  const {
+    addLocation,
+    state: { recording },
+  } = useContext(LocationContext);
+  const [err] = useLocation(isFocused, (location) =>
+    addLocation(location, recording)
+  );
   return (
     <SafeAreaView forceInset={{ top: 'always' }}>
       <Text h3>Create a Track</Text>
