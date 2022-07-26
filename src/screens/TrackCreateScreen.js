@@ -5,7 +5,7 @@ import { SafeAreaView, withNavigationFocus } from 'react-navigation';
 import Map from '../components/Map';
 import TrackForm from '../components/TrackForm';
 import useLocation from '../hooks/useLocation';
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { Context as LocationContext } from '../context/LocationContext';
 
 const TrackCreateScreen = ({ isFocused }) => {
@@ -13,9 +13,11 @@ const TrackCreateScreen = ({ isFocused }) => {
     addLocation,
     state: { recording },
   } = useContext(LocationContext);
-  const [err] = useLocation(isFocused, (location) =>
-    addLocation(location, recording)
+  const callback = useCallback(
+    (location) => addLocation(location, recording),
+    [recording]
   );
+  const [err] = useLocation(isFocused, callback);
   return (
     <SafeAreaView forceInset={{ top: 'always' }}>
       <Text h3>Create a Track</Text>
