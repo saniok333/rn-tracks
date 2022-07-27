@@ -11,7 +11,7 @@ const TrackForm = () => {
     changeName,
     state: { name, recording, locations },
   } = useContext(LocationContext);
-  console.log(locations.length);
+  const isPossibleToSaveTrack = !recording && !!locations.length;
   return (
     <>
       <Spacer>
@@ -21,12 +21,17 @@ const TrackForm = () => {
           onChangeText={changeName}
         />
       </Spacer>
-      <Button
-        title={recording ? 'Stop' : 'Start Recording'}
-        onPress={() => {
-          recording ? stopRecording() : startRecording();
-        }}
-      />
+      <Spacer>
+        <Button
+          title={recording ? 'Stop' : 'Start Recording'}
+          onPress={() => {
+            recording ? stopRecording() : startRecording();
+          }}
+        />
+      </Spacer>
+      <Spacer>
+        {isPossibleToSaveTrack && <Button title="Save Recording" />}
+      </Spacer>
     </>
   );
 };
