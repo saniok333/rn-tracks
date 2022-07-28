@@ -6,10 +6,12 @@ export default () => {
   const { createTrack } = useContext(TrackContext);
   const {
     state: { name, locations },
+    reset,
   } = useContext(LocationContext);
 
   const saveTrack = () => {
     createTrack(name, locations);
+    reset();
   };
 
   return [saveTrack];
